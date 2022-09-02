@@ -1,0 +1,40 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: metricbeat
+  author: Lean Delivery Team <team@lean-delivery.com>
+  description: Role for Metricbeat installation
+  company: EPAM Systems
+  issue_tracker_url: https://github.com/lean-delivery/ansible-role-metricbeat/issues
+  license: Apache
+  min_ansible_version: 2.7
+
+  platforms:
+    - name: EL
+      versions:
+        - 7
+        - 8
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+    - name: Debian
+      versions:
+        - stretch
+    - name: "Amazon"
+      versions:
+        - "all"
+    - name: "Windows"
+      versions:
+        - "all"
+
+  galaxy_tags:
+    - metricbeat
+    - beats
+    - elasticsearch
+    - elk
+    - metrics
+    - monitoring
+    - system
+    - windows

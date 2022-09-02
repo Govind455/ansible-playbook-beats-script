@@ -1,0 +1,5 @@
+- name: stop.yml | stop
+  service:
+    name: filebeat
+    state: stopped
+    enabled: false

@@ -1,0 +1,5 @@
+- name: install winlogbeat
+  hosts: windows
+  become: false
+  roles:
+      - deploy-winlogbeat

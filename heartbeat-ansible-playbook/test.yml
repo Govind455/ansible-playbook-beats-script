@@ -1,0 +1,5 @@
+- name: install filebeat
+  hosts: localhost
+  become: true
+  roles: 
+    - deploy_heartbeat

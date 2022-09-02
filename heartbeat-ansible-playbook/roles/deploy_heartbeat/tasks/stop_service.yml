@@ -1,0 +1,6 @@
+- name: stop_service.yml | stop
+  service:
+    name: heartbeat
+    state: stopped
+
+

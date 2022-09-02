@@ -1,0 +1,6 @@
+- name: uninstall filebeat
+  apt:
+    name: "filebeat={{ filebeat_version }}"
+    state: absent
+  notify:
+    - restart filebeat

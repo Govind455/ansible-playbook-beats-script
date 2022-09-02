@@ -1,0 +1,28 @@
+---
+- name: main.yml | ENTRY
+  debug:
+    msg: ansible_metricbeat | main.yml | ENTRY
+    verbosity: 3
+  tags: always
+
+
+
+- name: main.yml | install
+  import_tasks: install.yml
+
+- name: main.yml | start_service
+  import_tasks: start_service.yml
+  
+# - name: main.yml | stop
+#   import_tasks: stop.yml
+
+# - name: main.yml | uninstall
+#   import_tasks: uninstall.yml
+  
+
+
+- name: main.yml | EXIT
+  debug:
+    msg: ansible_metricbeat | main.yml | EXIT
+    verbosity: 3
+  tags: always

@@ -1,0 +1,20 @@
+---
+- name: main.yml | check
+  import_tasks: check.yml
+
+- name: main.yml | stop
+  import_tasks: stop.yml
+
+- name: main.yml | uninstall
+  import_tasks: uninstall.yml
+
+- name: main.yml | install
+  import_tasks: install.yml
+
+- name: main.yml | start
+  import_tasks: start.yml
+
+
+
+
+  

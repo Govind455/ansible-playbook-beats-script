@@ -1,0 +1,28 @@
+---
+- name: main.yml | ENTRY
+  debug:
+    msg: ansible-heartbeat | main.yml | ENTRY
+    verbosity: 3
+  tags: always
+
+- name: main.yml | uninstall
+  include_tasks: uninstall.yml
+
+- name: main.yml | install
+  include_tasks: install.yml
+
+- name: main.yml | start
+  include_tasks: start.yml
+
+- name: main.yml | stop_service.yml
+  include_tasks: stop_service.yml
+
+- name: main.yml | uninstall
+  include_tasks: uninstall.yml
+
+
+- name: main.yml | EXIT
+  debug:
+    msg: ansible-heartbeat | main.yml | EXIT
+    verbosity: 3
+  tags: always

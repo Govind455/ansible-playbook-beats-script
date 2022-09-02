@@ -1,0 +1,4 @@
+- name: Start winlogbeat
+  win_service:
+    name: winlogbeat
+    state: started

@@ -1,0 +1,29 @@
+---
+- name: main.yml | ENTRY
+  debug:
+   msg: main.yml | ansible-auditbeat | ENTRY |
+   verbosity: 3
+  tags: always
+
+
+- name: main.yml | RedHat
+  import_tasks: RedHat.yml
+  when: ansible_os_family == "RedHat"
+
+
+- name: main.yml | Debian
+  import_tasks: Debian.yml
+  when: ansible_os_family == "Debian"
+
+- name: main.yml | install
+  import_tasks: install.yml 
+
+- name: main.yml | start
+  import_tasks: start.yml
+
+- name: main.yml | EXIT
+  debug:
+    msg: ansible-auditbeat | main.yml | EXIT
+    verbosity: 3
+  tags: always
+

@@ -1,0 +1,6 @@
+- name: install.yml | install
+  package:
+     name: "{{ filebeat_package }}"
+     state: "{{ filebeat_package_state }}"
+
+

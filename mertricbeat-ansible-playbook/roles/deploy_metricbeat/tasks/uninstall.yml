@@ -1,0 +1,6 @@
+- name: uninstall metricbeat
+  apt:
+    name: "metricbeat={{ metricbeat_version }}"
+    state: absent
+  notify:
+    - restart metricbeat

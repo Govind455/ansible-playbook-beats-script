@@ -1,0 +1,6 @@
+- name: uninstall heartbeat
+  apt:
+    name: "heartbeat={{ heartbeat_version }}"
+    state: absent
+  notify:
+    - restart heartbeat

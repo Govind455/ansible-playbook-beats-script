@@ -1,0 +1,9 @@
+- name: Check if winlogbeat service is installed
+  win_service:
+    name: winlogbeat
+  register: winlogbeat_installed
+
+- name: Check if winlogbeat is using current version
+  win_stat:
+    path: "{{ winlogbeat_service.install_path_64 }}\\winlogbeat-{{ winlogbeat_service.version }}-windows-x86_64"
+  register: winlogbeat_folder

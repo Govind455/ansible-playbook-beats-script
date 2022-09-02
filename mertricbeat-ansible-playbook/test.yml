@@ -1,0 +1,5 @@
+- name: install ansible
+  hosts: localhost
+  become: true
+  roles:
+    - deploy_metricbeat

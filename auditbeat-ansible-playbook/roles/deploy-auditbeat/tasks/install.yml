@@ -1,0 +1,53 @@
+---
+- name: (Linux) Stop auditd
+  command:
+    cmd: service auditd stop
+    warn: False
+  when:
+    - ansible_facts.services['auditd'] is defined
+    - ansible_os_family != "Windows"
+  tags: install
+
+- name: (Linux) Remove auditd from starting on boot
+  command:
+    cmd: chkconfig auditd off
+    warn: False
+  when:
+    - ansible_facts.services['auditd'] is defined
+    - ansible_os_family == "Debian"
+  tags: install
+
+- name: (Debian/Ubuntu) Install auditbeat apt
+  apt:
+    name: auditbeat={{ auditbeat_service.version }}
+    state: present
+  when: ansible_os_family == "Debian"
+  tags: install
+
+- name: (REHL/CentOS) Install auditbeat yum
+  yum:
+    name: auditbeat-{{ auditbeat_service.version }}
+    state: present
+  when: ansible_os_family == "RedHat"
+  tags: install
+
+- name: (Linux) Create auditbeat configuration file
+  template:
+    src: auditbeat.yml.j2
+    dest: "{{ auditbeat_service.config_path }}/auditbeat.yml"
+  when: ansible_os_family == "Debian"
+  notify: restart-auditbeat
+  tags: configure
+
+- name: (Linux) Install auditing rules for auditbeat
+  copy:
+    src: files/{{ auditbeat_service.rule_file }}
+    dest: "{{ auditbeat_service.config_path }}/audit.rules.d/"
+    owner: root
+    group: root
+    mode: '0644'
+  tags: configure
+  when:
+    - ansible_os_family == "Debian"
+    - auditbeat_service.install_rules
+  notify: restart-auditbeat

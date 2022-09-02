@@ -1,0 +1,19 @@
+---
+auditbeat_service:
+  version: "7.16.2"
+  download: true
+  config_path: /etc/auditbeat
+  install_rules: false
+
+auditbeat_output:
+  type: "elasticsearch"
+  elasticsearch:
+    hosts:
+      - "localhost:9200"
+    security:
+      enabled: false
+
+auditbeat_processors: |
+  - add_host_metadata: ~
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~

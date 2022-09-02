@@ -1,0 +1,4 @@
+- name: Stop winlogbeat
+  win_service:
+    name: winlogbeat
+    state: stopped

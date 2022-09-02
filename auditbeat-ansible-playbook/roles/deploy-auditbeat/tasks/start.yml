@@ -1,0 +1,6 @@
+- name: Start auditbeat
+  service:
+       name: auditbeat
+       state: started
+       enabled: true
+  become: true

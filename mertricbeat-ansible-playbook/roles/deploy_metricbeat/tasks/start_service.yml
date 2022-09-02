@@ -1,0 +1,6 @@
+- name: Start metricbeat
+  service:
+       name: metricbeat
+       state: started
+       enabled: true
+  become: true

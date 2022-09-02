@@ -1,0 +1,41 @@
+---
+- name: main.yml | ENTRY
+  debug:
+    msg: ansible-filebeat | main.yml | ENTRY
+    verbosity: 3
+  tags: always
+
+
+
+
+- name: main.yml | setup-Debian
+  include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+
+- name: main.yml | setup-RedHat
+  include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: main.yml | install
+  include_tasks: install.yml
+
+- name: main.yml | config
+  include_tasks: config.yml 
+  when: filebeat_create_config | bool
+
+
+- name: main.yml | start
+  include_tasks: start.yml
+
+# - name: main.yml | stop
+#   include_tasks: stop.yml
+
+# - name: main.yml | uninstall
+#   include_tasks: uninstall.yml
+
+- name: main.yml | EXIT
+  debug:
+    msg: ansible-filebeat | main.yml | EXIT
+    verbosity: 3
+  tags: always

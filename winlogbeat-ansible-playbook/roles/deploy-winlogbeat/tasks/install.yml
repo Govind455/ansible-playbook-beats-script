@@ -1,0 +1,31 @@
+- name: Create 64-bit install directory
+  ansible.windows.win_file:
+    path: "{{ winlogbeat_service.install_path_64 }}"
+    state: directory
+  
+
+- name: Download winlogbeat
+  win_get_url:
+    url: "https://artifacts.elastic.co/downloads/beats/winlogbeat/winlogbeat-{{ winlogbeat_service.version }}-windows-x86_64.zip"
+    dest: "{{ winlogbeat_service.install_path_64 }}\\winlogbeat.zip"
+
+
+- name: Unzip winlogbeat
+  win_unzip:
+    src: "{{ winlogbeat_service.install_path_64 }}\\winlogbeat.zip"
+    dest: "{{ winlogbeat_service.install_path_64 }}\\"
+    delete_archive: yes
+  
+
+- name: Configure winlogbeat
+  win_template:
+    src: winlogbeat.yml.j2
+    dest: "{{ winlogbeat_service.install_path_64 }}\\winlogbeat-{{ winlogbeat_service.version }}-windows-x86_64\\winlogbeat.yml"
+
+
+- name: Install winlogbeat
+  win_shell: .\install-service-winlogbeat.ps1
+  args:
+    chdir: "{{ winlogbeat_service.install_path_64 }}\\winlogbeat-{{ winlogbeat_service.version }}-windows-x86_64\\"
+
+

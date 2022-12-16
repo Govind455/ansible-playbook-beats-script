@@ -1,0 +1,26 @@
+---
+
+- name: start.yml | ENTRY
+  debug:
+   msg: start.yml | ansible-logstash | ENTRY |
+   verbosity: 3
+  tags: always
+
+# - name: start.yml | start service logstash
+#   systemd:
+#    name: "{{ role_logstash.logstash_package }}"
+#    state: 'started'
+
+- name: start.yml | start
+  systemd:
+    name: '{{ ls_service_name }}'
+    state: '{{ (ls_service_start) | ternary("started","stopped") }}'
+    enabled: '{{ ls_service_autostart }}'
+    # become: True
+
+
+- name: start.yml | EXIT
+  debug:
+   msg: ansible-logstash | start.yml | ENTRY
+   verbosity: 3
+  tags: always

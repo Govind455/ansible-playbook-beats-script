@@ -1,0 +1,40 @@
+---
+
+- name: main.yml | ENTRY
+  debug:
+    msg: ansible-logstash | main.yml | ENTRY
+    verbosity: 3
+  tags: always
+
+
+# - name: main.yml | check
+#   import_tasks: check.yml
+#   tags: [always, check]
+
+# - name: main.yml | stop
+#   import_tasks: stop.yml
+#   # when: role_logstash.state == 'stopped' or role_logstash.state == 'absent'
+#   tags: [always, stop]
+
+# - name: main.yml | uninstall
+#   import_tasks: uninstall.yml
+#   when: role_logstash.state == 'absent'
+#   tags: [never, uninstall]
+
+- name: main.yml | install1
+  import_tasks: install1.yml
+ # when: role_logstash.state == 'present' or role_logstash.state == 'started'
+  #when: state == 'present' or state == 'started'
+  tags: [always, install]
+
+- name: main.yml | start
+  import_tasks: start.yml
+  #when: role_logstash.state == 'started'
+  #when: state == 'started'
+  tags: [always, start]
+
+- name: main.yml | EXIT
+  debug:
+    msg: ansible-logstash | main.yml | EXIT
+    verbosity: 3
+  tags: always

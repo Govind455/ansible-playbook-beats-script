@@ -1,0 +1,78 @@
+---
+
+# - name: Ansible Logstash Play
+#   hosts: all
+#   serial: 1
+#   any_errors_fatal: true
+#   gather_facts: false
+
+#   tasks:
+
+#     - name: Include vars
+#       include_vars:
+#         dir: global
+#         extensions:
+#           - 'yml'
+#         depth: 1
+#       tags: always
+
+#     - name: Gather Facts
+#       setup:
+#       tags: always
+
+#     - name: bootstrap | Install elastic 7.x and 8.x yum repo
+#       become: true
+#       block:
+
+#         - name: import role ansible-yum-repos
+#           import_role:
+#             name: ansible-yum-repos
+#             tasks_from: "install"
+#           vars:
+#             param_yum_repos:
+#               state: "present"
+#               list:
+#                 - name: elastic7-yum-repo
+#                   desc: elastic7-yum-repo
+#                   base: 'https://repo.services.nublar.de/repository/elastic-yum-repo/packages/7.x/yum/'
+#                   gpgcheck: yes
+#                   sslverify: yes
+#                   gpgkey: https://repo.services.nublar.de/repository/elastic-yum-repo/GPG-KEY-elasticsearch
+#                   enabled: no
+#                 - name: elastic8-yum-repo
+#                   desc: elastic8-yum-repo
+#                   base: 'https://repo.services.nublar.de/repository/elastic-yum-repo/packages/8.x/yum/'
+#                   gpgcheck: yes
+#                   sslverify: yes
+#                   gpgkey: https://repo.services.nublar.de/repository/elastic-yum-repo/GPG-KEY-elasticsearch
+#                   enabled: no
+#       tags: always
+
+# - name: Logstash
+#   hosts: all
+#   serial: 1
+#   any_errors_fatal: true
+#   gather_facts: false
+
+#   tasks:
+
+#     - name: import base-linux role
+#       import_role:
+#         name: ansible-base-linux
+
+#     - name: Collect facts
+#       setup:
+#       tags: always
+
+#     - name: import ansible-manage-win-dns role
+#       import_role:
+#         name: ansible-manage-win-dns
+
+#     - name: import logstash role
+#       import_role:
+#         name: ansible-slogstash
+- name: deploy logstash
+  hosts: localhost
+  become: true
+  roles: 
+    - deploy_logstash

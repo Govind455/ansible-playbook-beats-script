@@ -1,0 +1,53 @@
+---
+
+- name: uninstall.yml | ENTRY
+  debug:
+   msg: ansible-logstash | uninstall.yml | ENTRY
+   verbosity: 3
+  tags: always
+
+
+- name: uninstall.yml | stop and disable service "{{ role_logstash.logstash_package }}" and "{{ role_logstash.lb.servicename }}"
+  become: true
+  systemd:
+   name: "{{ role_logstash.logstash_package }}"
+   enabled: false
+   state: 'stopped'
+   daemon_reload: true
+  failed_when: false
+
+- name: uninstall.yml | import uninstall_sysctl
+  include_tasks: uninstall_sysctl.yml
+  tags: molecule-notest
+
+- name: uninstall.yml | uninstall packages {{ item }}
+  become: true
+  package:
+   name: "{{ role_logstash.logstash_package }}"
+   state: absent
+   update_cache: true
+
+- name: uninstall.yml | remove files {{ item }}
+  become: true
+  file:
+   path: "{{ item }}"
+   state: 'absent'
+  loop:
+   - '/etc/logstash'
+   - '/var/lib/logstash'
+   - '/var/log/logstash'
+
+- name: uninstall.yml | remove repository "{{ role_logstash.lb.yumrepos + role_logstash.vrrp.yumrepos }}"
+  become: true
+  yum_repository:
+   name: "{{ item.name }}"
+   file: "{{ item.filename }}"
+   baseurl: "{{ item.baseurl }}"
+   state: 'absent'
+  loop: "{{ role_logstash.lb.yumrepos + role_logstash.vrrp.yumrepos }}"
+
+- name: uninstall.yml | EXIT
+  debug:
+   msg: ansible-logstash | uninstall.yml | ENTRY
+   verbosity: 3
+  tags: always

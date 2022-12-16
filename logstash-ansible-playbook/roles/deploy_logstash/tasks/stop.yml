@@ -1,0 +1,27 @@
+---
+
+- name: stop.yml | ENTRY
+  debug:
+   msg: stop.yml | ansible-logstash | ENTRY |
+   verbosity: 3
+  tags: always
+
+# - name: stop.yml | stop service "{{ role_logstash.logstash_package }}"
+#   systemd:
+#    name: "{{ role_logstash.logstash_package }}"
+#    state: 'stopped'
+#  # noqa ignore-errors
+#   ignore_errors: "{{ role_logstash.state == 'absent' }}"
+
+- name: stop.yml | stop
+  systemd:
+    name: '{{ ls_service_name }}'
+    state: '{{ (ls_service_stop) | ternary("stopped","started") }}'
+    enabled: '{{ ls_service_autostop }}'
+    # become: True
+
+- name: stop.yml | EXIT
+  debug:
+   msg: ansible-logstash | stop.yml | ENTRY
+   verbosity: 3
+  tags: always
